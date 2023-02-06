@@ -76,9 +76,9 @@ export default {
 
       //check if the spelling is correct
       if (this.word != this.wordCheck.toLowerCase()) {
-        this.spellResults = "Incorrect";
+        this.spellResults = "Please try again";
       } else {
-        this.spellResults = "Correct";
+        this.spellResults = "Congratualations!!!";
       }
     },
 

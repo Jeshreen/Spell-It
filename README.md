@@ -1,4 +1,4 @@
-# spellit
+# Spell-It
 
 **Tier:** 3-Advanced
 
