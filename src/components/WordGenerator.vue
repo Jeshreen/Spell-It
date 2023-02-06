@@ -1,21 +1,23 @@
 <template>
   <div>
-    <container>
-      <h1>SpellIt</h1>
+    <b-container>
       <b-button @click="getWord">Listen</b-button>
-      <b-row>
-        <b-form-input
-          v-model="wordCheck"
-          type="text"
-          id="wordCheck"
-        ></b-form-input
-        >\
-        <b-button id="spellCheck" @click="spellCheck">Spell Check</b-button>
-      </b-row>
-      <b-row>
-        <p>{{ spellResults }}</p>
-      </b-row>
-    </container>
+      <b-col>
+        <b-row>
+          <b-form-input
+            v-model="wordCheck"
+            type="text"
+            id="wordCheck"
+          ></b-form-input>
+          <b-button id="spellCheck" @click="spellCheck">Spell Check</b-button>
+        </b-row>
+      </b-col>
+      <b-col>
+        <b-row>
+          <p>{{ spellResults }}</p>
+        </b-row>
+      </b-col>
+    </b-container>
   </div>
 </template>
 
@@ -76,8 +78,18 @@ export default {
 
       //check if the spelling is correct
       if (this.word != this.wordCheck.toLowerCase()) {
+        const errorAudio = new Audio(
+          "https://www.fesliyanstudios.com/play-mp3/5265"
+        );
+        errorAudio.play();
+        this.$store.dispatch("incorrectSpelling");
         this.spellResults = "Please try again";
       } else {
+        const successAudio = new Audio(
+          "https://www.fesliyanstudios.com/play-mp3/5250"
+        );
+        successAudio.play();
+        this.$store.dispatch("successSpelling");
         this.spellResults = "Congratualations!!!";
       }
     },
@@ -86,11 +98,12 @@ export default {
      * Method to validate the entered word
      */
     validateWord() {
-      console.log(this.wordCheck.match(/^[A-Za-z]+$/));
-      if (!this.wordCheck) { //Null check
+      if (!this.wordCheck) {
+        //Null check
         this.spellResults = "Please Enter the word";
         return true;
-      } else if (!this.wordCheck.match(/^[A-Za-z]+$/)) { //checking for special characters
+      } else if (!this.wordCheck.match(/^[A-Za-z]+$/)) {
+        //checking for special characters
         this.spellResults = "Please Enter a valid word with letters only";
         return true;
       } else {

@@ -24,11 +24,11 @@ recording of a word the user must then spell using the computer keyboard.
 
 ## Bonus features
 
--   [ ] User can hear an confirmation sound when the word is correctly spelled
--   [ ] User can hear a warning sound when the word is incorrectly spelled
+-   [&check;] User can hear an confirmation sound when the word is correctly spelled
+-   [&check;] User can hear a warning sound when the word is incorrectly spelled
 -   [ ] User can click the 'Hint' button to highlight the incorrect letters
         in the word input text box
--   [ ] User can press the 'Enter' key on the keyboard to submit a typed word
+-   [&check;] User can press the 'Enter' key on the keyboard to submit a typed word
         or click the 'Enter' button in the app window
 
 ## Project setup

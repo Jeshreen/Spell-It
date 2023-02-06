@@ -1,15 +1,30 @@
 <template>
   <div id="app">
-    <WordGeneratoe />
+    <h1>Spell-It</h1>
+
+    <UserDetails v-if="!user" />
+    <div v-if="user">
+      <UserCard />
+      <WordGenerator />
+    </div>
   </div>
 </template>
 
 <script>
-import WordGeneratoe from "./components/WordGeneratoe.vue";
+import WordGenerator from "./components/WordGenerator.vue";
+import UserDetails from "./components/UserDetails.vue";
+import UserCard from "./components/UserCard.vue";
 export default {
   name: "App",
   components: {
-    WordGeneratoe,
+    WordGenerator,
+    UserDetails,
+    UserCard,
+  },
+  computed: {
+    user() {
+      return this.$store.state.currentUser;
+    },
   },
 };
 </script>
