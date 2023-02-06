@@ -19,7 +19,7 @@ recording of a word the user must then spell using the computer keyboard.
 -   [&check;] User can see a confirmation message when the correct word is typed
 -   [&check;] User can see a message requesting the word be typed again when it is
         spelled incorrectly
--   [ ] User can see a tally of the number of correct spellings, total number
+-   [&check;] User can see a tally of the number of correct spellings, total number
         of words attempted, and a percentage of successful entries.
 
 ## Bonus features
