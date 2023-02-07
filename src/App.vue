@@ -6,6 +6,7 @@
     <div v-if="user">
       <UserCard />
       <WordGenerator />
+      <b-button @click="reset">Reset Game</b-button>
     </div>
   </div>
 </template>
@@ -24,6 +25,11 @@ export default {
   computed: {
     user() {
       return this.$store.state.currentUser;
+    },
+  },
+  methods: {
+    reset() {
+      this.$store.dispatch("resetUser")
     },
   },
 };

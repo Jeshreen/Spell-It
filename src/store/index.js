@@ -47,7 +47,7 @@ export default new Vuex.Store({
     },
 
     //Incrementing only the attempts value if the spelling is wrong
-    set_unsuccess(state){
+    set_unsuccess(state) {
       state.userScore.attempts++;
       localStorage.setItem('userScore', JSON.stringify(state.userScore));
     }
@@ -60,12 +60,29 @@ export default new Vuex.Store({
     successSpelling({ commit }) {
       commit('set_success')
     },
+
     /**
      * Method to handle incorrect spelling
      * @param {*} param0 
      */
-    incorrectSpelling({commit}){
+    incorrectSpelling({ commit }) {
       commit('set_unsuccess')
+    },
+
+    /**
+     * Resting the state details
+     * @param {*} param0 
+     */
+    resetUser({ commit }) {
+      let currentUser = "";
+      let userScore = {
+        attempts: 0,
+        successfulAttempts: 0
+      };
+
+      commit("set_currenUser", currentUser);
+      commit("set_userScore", userScore);
+      localStorage.clear();
     }
   },
   modules: {
