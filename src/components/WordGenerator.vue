@@ -4,23 +4,34 @@
       <b-button @click="getWord" :disabled="isListenDisabled">Listen</b-button>
       <b-col>
         <b-row>
-          <b-form-input
+          <!-- <b-form-input
             v-model="wordCheck"
             type="text"
             id="wordCheck"
             @keyup.enter="spellCheck"
-          ></b-form-input>
+          ></b-form-input> -->
+          <div v-for="l in wordLength" v-bind:key="l">
+            <b-form-input
+              v-model="wordList.letter[l]"
+              maxlength="1"
+              type="text"
+              :id="`wordCheck-${l}`"
+              @keyup.enter="spellCheck"
+            >
+            </b-form-input>
+          </div>
+
+          <p>{{ spellResults }}</p>
+
           <b-button
             id="spellCheck"
             @click="spellCheck"
             :disabled="isDisableSpellCheck"
             >Spell Check</b-button
           >
-        </b-row>
-      </b-col>
-      <b-col>
-        <b-row>
-          <p>{{ spellResults }}</p>
+          <b-button id="hint" @click="getHint" :disabled="isDisableSpellCheck"
+            >Hint</b-button
+          >
         </b-row>
       </b-col>
     </b-container>
@@ -45,6 +56,10 @@ export default {
       spellResults: "",
       isListenDisabled: false, //disabling the button when user enters the spelling
       isDisableSpellCheck: true, //Disable the button untill a word is entered
+      wordLength: 1,
+      wordList: {
+        letter: [],
+      },
     };
   },
   watch: {
@@ -54,6 +69,13 @@ export default {
         this.isDisableSpellCheck = false;
         this.isListenDisabled = true;
       }
+    },
+    wordList: {
+      handler() {
+        this.wordLength++;
+        this.wordCheck = this.wordList.letter.join("");
+      },
+      deep: true,
     },
   },
   methods: {
@@ -149,9 +171,34 @@ export default {
       this.isDisableSpellCheck = true;
       this.isListenDisabled = false;
     },
+
+    /**
+     * Method to get hint
+     */
+    getHint() {
+      //validate the word
+      let validated = this.validateWord();
+
+      if (validated || this.isDisableSpellCheck) {
+        return;
+      }
+      let str1 = this.word[0].split("");
+      let str2 = this.wordCheck.split("");
+      let diff = str2.filter((x) => !str1.includes(x));
+
+      diff.forEach((w) => {
+        let letterPos = this.wordCheck.indexOf(w) + 1;
+        let letterId = "wordCheck-" + letterPos;
+        let ele = document.getElementById(letterId);
+        ele.classList.add("incorrect");
+      });
+    },
   },
 };
 </script>
 
 <style>
+.incorrect {
+  background-color: #ff8449 !important;
+}
 </style>

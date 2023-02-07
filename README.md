@@ -26,7 +26,7 @@ recording of a word the user must then spell using the computer keyboard.
 
 -   [&check;] User can hear an confirmation sound when the word is correctly spelled
 -   [&check;] User can hear a warning sound when the word is incorrectly spelled
--   [ ] User can click the 'Hint' button to highlight the incorrect letters
+-   [&check;] User can click the 'Hint' button to highlight the incorrect letters
         in the word input text box
 -   [&check;] User can press the 'Enter' key on the keyboard to submit a typed word
         or click the 'Enter' button in the app window
