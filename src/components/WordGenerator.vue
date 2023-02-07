@@ -10,13 +10,14 @@
             id="wordCheck"
             @keyup.enter="spellCheck"
           ></b-form-input> -->
-          <div v-for="l in wordLength" v-bind:key="l">
+          <div v-for="l in wordLength" v-bind:key="l" class="letters">
             <b-form-input
               v-model="wordList.letter[l]"
               maxlength="1"
               type="text"
               :id="`wordCheck-${l}`"
               @keyup.enter="spellCheck"
+              :disabled="isInputDisabled"
             >
             </b-form-input>
           </div>
@@ -56,8 +57,10 @@ export default {
       spellResults: "",
       isListenDisabled: false, //disabling the button when user enters the spelling
       isDisableSpellCheck: true, //Disable the button untill a word is entered
+      isInputDisabled: true, //Disabling the input until the play button is clicked
       wordLength: 1,
       wordList: {
+        //Obtainign the letters in an array
         letter: [],
       },
     };
@@ -86,6 +89,9 @@ export default {
       //using the random words npm package to generate a word
       let randomWords = require("random-words");
       this.word = randomWords(1);
+
+      //Enabling the input field
+      this.isInputDisabled = false;
 
       //converting the text to speech
       let speechWord = new SpeechSynthesisUtterance();
@@ -168,8 +174,19 @@ export default {
     resetFields() {
       this.word = "";
       this.wordCheck = "";
+      this.wordLength = 1;
+      this.isInputDisabled = true;
       this.isDisableSpellCheck = true;
       this.isListenDisabled = false;
+      this.wordList= {
+        //Obtainign the letters in an array
+        letter: [],
+      };
+      // Remove class from all children elements of .letters div
+      const elements = document.querySelectorAll(".letters *");
+      elements.forEach((element) => {
+        element.classList.remove("incorrect");
+      });
     },
 
     /**
@@ -182,14 +199,21 @@ export default {
       if (validated || this.isDisableSpellCheck) {
         return;
       }
+
+      //Spliting the string to characters to compare
       let str1 = this.word[0].split("");
       let str2 = this.wordCheck.split("");
+
+      //Identifying the difference between strings
       let diff = str2.filter((x) => !str1.includes(x));
 
+      //Looping through the differnt letters
       diff.forEach((w) => {
         let letterPos = this.wordCheck.indexOf(w) + 1;
         let letterId = "wordCheck-" + letterPos;
         let ele = document.getElementById(letterId);
+
+        //Adding the class to show the hint
         ele.classList.add("incorrect");
       });
     },
