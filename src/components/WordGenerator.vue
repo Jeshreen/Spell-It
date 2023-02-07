@@ -3,7 +3,10 @@
     <b-container>
       <b-row class="my-5">
         <b-col>
-          <b-button @click="getWord" :disabled="isListenDisabled" variant="outline-info"
+          <b-button
+            @click="getWord"
+            :disabled="isListenDisabled"
+            variant="outline-info"
             >Listen</b-button
           >
         </b-col>
@@ -227,14 +230,24 @@ export default {
       let diff = str2.filter((x) => !str1.includes(x));
 
       //Looping through the differnt letters
-      diff.forEach((w) => {
-        let letterPos = this.wordCheck.indexOf(w) + 1;
+      let indexes = [];
+      str2.forEach((w) => {
+        diff.findIndex((value, index) => {
+          if (value == w) {
+            indexes.push(index);
+          }
+        });
+      });
+
+      indexes.forEach((i) => {
+        let letterPos = i + 1;
         let letterId = "wordCheck-" + letterPos;
         let ele = document.getElementById(letterId);
-
         //Adding the class to show the hint
         ele.classList.add("incorrect");
       });
+
+      indexes = [];
     },
   },
 };
