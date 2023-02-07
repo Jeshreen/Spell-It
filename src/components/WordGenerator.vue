@@ -1,15 +1,21 @@
 <template>
   <div>
     <b-container>
-      <b-button @click="getWord">Listen</b-button>
+      <b-button @click="getWord" :disabled="isListenDisabled">Listen</b-button>
       <b-col>
         <b-row>
           <b-form-input
             v-model="wordCheck"
             type="text"
             id="wordCheck"
+            @keyup.enter="spellCheck"
           ></b-form-input>
-          <b-button id="spellCheck" @click="spellCheck">Spell Check</b-button>
+          <b-button
+            id="spellCheck"
+            @click="spellCheck"
+            :disabled="isDisableSpellCheck"
+            >Spell Check</b-button
+          >
         </b-row>
       </b-col>
       <b-col>
@@ -31,22 +37,24 @@ export default {
     } else {
       alert("This browser does not support speech synthesis");
     }
-
-    //trigger the submit functionality on enter
-    let wordCheck = document.getElementById("wordCheck");
-    wordCheck.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        document.getElementById("spellCheck").click();
-      }
-    });
   },
   data() {
     return {
       word: "",
       wordCheck: "",
       spellResults: "",
+      isListenDisabled: false, //disabling the button when user enters the spelling
+      isDisableSpellCheck: true, //Disable the button untill a word is entered
     };
+  },
+  watch: {
+    //check for value change
+    wordCheck(val) {
+      if (val) {
+        this.isDisableSpellCheck = false;
+        this.isListenDisabled = true;
+      }
+    },
   },
   methods: {
     /**
@@ -72,26 +80,47 @@ export default {
       //validate the word
       let validated = this.validateWord();
 
-      if (validated) {
+      if (validated || this.isDisableSpellCheck) {
         return;
       }
 
       //check if the spelling is correct
       if (this.word != this.wordCheck.toLowerCase()) {
+        //Error audio play
         const errorAudio = new Audio(
           "https://www.fesliyanstudios.com/play-mp3/5265"
         );
         errorAudio.play();
+
+        //dispatching the store action
         this.$store.dispatch("incorrectSpelling");
-        this.spellResults = "Please try again";
+
+        //Displaying a toast message
+        this.$bvToast.toast("You have spelled the word incorrectly", {
+          title: "Incorrect",
+          variant: "error",
+          solid: true,
+        });
       } else {
+        //Success audio play
         const successAudio = new Audio(
           "https://www.fesliyanstudios.com/play-mp3/5250"
         );
         successAudio.play();
+
+        //dispatching the store action
         this.$store.dispatch("successSpelling");
-        this.spellResults = "Congratualations!!!";
+
+        //Displaying a toast message
+        this.$bvToast.toast("You have spelled the word correct", {
+          title: "Congratulations",
+          variant: "success",
+          autoHideDelay: 5000,
+          solid: true,
+        });
       }
+
+      this.resetFields();
     },
 
     /**
@@ -109,6 +138,16 @@ export default {
       } else {
         return false;
       }
+    },
+
+    /**
+     * Restting all fields after every attempt
+     */
+    resetFields() {
+      this.word = "";
+      this.wordCheck = "";
+      this.isDisableSpellCheck = true;
+      this.isListenDisabled = false;
     },
   },
 };
