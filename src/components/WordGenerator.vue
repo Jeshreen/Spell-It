@@ -1,40 +1,59 @@
 <template>
   <div>
     <b-container>
-      <b-button @click="getWord" :disabled="isListenDisabled">Listen</b-button>
-      <b-col>
-        <b-row>
-          <!-- <b-form-input
+      <b-row class="my-5">
+        <b-col>
+          <b-button @click="getWord" :disabled="isListenDisabled" variant="outline-info"
+            >Listen</b-button
+          >
+        </b-col>
+      </b-row>
+
+      <!-- <b-form-input
             v-model="wordCheck"
             type="text"
             id="wordCheck"
             @keyup.enter="spellCheck"
           ></b-form-input> -->
-          <div v-for="l in wordLength" v-bind:key="l" class="letters">
-            <b-form-input
-              v-model="wordList.letter[l]"
-              maxlength="1"
-              type="text"
-              :id="`wordCheck-${l}`"
-              @keyup.enter="spellCheck"
-              :disabled="isInputDisabled"
-            >
-            </b-form-input>
-          </div>
 
+      <b-row class="d-flex flex-row align-items-center justify-content-center">
+        <b-col lg="1" v-for="l in wordLength" v-bind:key="l" class="letters">
+          <b-form-input
+            v-model="wordList.letter[l]"
+            maxlength="1"
+            type="text"
+            :id="`wordCheck-${l}`"
+            @keyup.enter="spellCheck"
+            :disabled="isInputDisabled"
+          >
+          </b-form-input>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" class="mb-3">
           <p>{{ spellResults }}</p>
-
+        </b-col>
+        <b-col cols="12" class="mb-3">
           <b-button
+            block
+            class="me-3"
             id="spellCheck"
             @click="spellCheck"
             :disabled="isDisableSpellCheck"
+            variant="outline-success"
             >Spell Check</b-button
           >
-          <b-button id="hint" @click="getHint" :disabled="isDisableSpellCheck"
+
+          <b-button
+            block
+            id="hint"
+            @click="getHint"
+            :disabled="isDisableSpellCheck"
+            variant="outline-warning"
             >Hint</b-button
           >
-        </b-row>
-      </b-col>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -178,7 +197,7 @@ export default {
       this.isInputDisabled = true;
       this.isDisableSpellCheck = true;
       this.isListenDisabled = false;
-      this.wordList= {
+      this.wordList = {
         //Obtainign the letters in an array
         letter: [],
       };
@@ -202,7 +221,7 @@ export default {
 
       //Spliting the string to characters to compare
       let str1 = this.word[0].split("");
-      let str2 = this.wordCheck.split("");
+      let str2 = this.wordCheck.toLowerCase().split("");
 
       //Identifying the difference between strings
       let diff = str2.filter((x) => !str1.includes(x));
@@ -223,6 +242,6 @@ export default {
 
 <style>
 .incorrect {
-  background-color: #ff8449 !important;
+  background-color: #ffcccb !important;
 }
 </style>

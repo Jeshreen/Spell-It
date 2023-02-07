@@ -6,7 +6,7 @@
     <div v-if="user">
       <UserCard />
       <WordGenerator />
-      <b-button @click="reset">Reset Game</b-button>
+      <b-button @click="reset" variant="outline-danger">Reset Game</b-button>
     </div>
   </div>
 </template>
