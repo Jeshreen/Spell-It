@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mount Component has the expected html structure 1`] = `
+<div>
+  <b-container>
+    <b-button>
+      Listen
+    </b-button>
+     
+    <b-col>
+      <b-row>
+        <div
+          class="letters"
+        >
+          <b-form-input
+            disabled="true"
+            id="wordCheck-1"
+            maxlength="1"
+            type="text"
+          />
+        </div>
+         
+        <p>
+          
+        </p>
+         
+        <b-button
+          disabled="true"
+          id="spellCheck"
+        >
+          Spell Check
+        </b-button>
+         
+        <b-button
+          disabled="true"
+          id="hint"
+        >
+          Hint
+        </b-button>
+      </b-row>
+    </b-col>
+  </b-container>
+</div>
+`;
