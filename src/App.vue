@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Spell-It</h1>
-
+    <p>Listen to the word, and spell it ...</p>
     <UserDetails v-if="!user" />
     <div v-if="user">
       <UserCard />
