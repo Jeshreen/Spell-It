@@ -3,42 +3,68 @@
 exports[`Mount Component has the expected html structure 1`] = `
 <div>
   <b-container>
-    <b-button>
-      Listen
-    </b-button>
-     
-    <b-col>
-      <b-row>
-        <div
-          class="letters"
+    <b-row
+      class="my-5"
+    >
+      <b-col>
+        <b-button
+          variant="outline-info"
         >
-          <b-form-input
-            disabled="true"
-            id="wordCheck-1"
-            maxlength="1"
-            type="text"
-          />
-        </div>
-         
+          Listen
+        </b-button>
+      </b-col>
+    </b-row>
+     
+    <b-row
+      class="d-flex flex-row align-items-center justify-content-center"
+    >
+      <b-col
+        class="letters"
+        lg="1"
+      >
+        <b-form-input
+          disabled="true"
+          id="wordCheck-1"
+          maxlength="1"
+          type="text"
+        />
+      </b-col>
+    </b-row>
+     
+    <b-row>
+      <b-col
+        class="mb-3"
+        cols="12"
+      >
         <p>
           
         </p>
-         
+      </b-col>
+       
+      <b-col
+        class="mb-3"
+        cols="12"
+      >
         <b-button
+          block=""
+          class="me-3"
           disabled="true"
           id="spellCheck"
+          variant="outline-success"
         >
           Spell Check
         </b-button>
          
         <b-button
+          block=""
           disabled="true"
           id="hint"
+          variant="outline-warning"
         >
           Hint
         </b-button>
-      </b-row>
-    </b-col>
+      </b-col>
+    </b-row>
   </b-container>
 </div>
 `;
